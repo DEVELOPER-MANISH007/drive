@@ -43,6 +43,16 @@ app.use(cookieParser());
 app.use("/", userRouter);
 app.use("/", indexRouter);
 
+// ✅ Health for diagnostics
+app.get('/health', (req, res) => {
+  res.json({
+    ok: true,
+    vercel: !!process.env.VERCEL,
+    csp: true,
+    mongoUriPresent: !!(process.env.MONGODB_URI || process.env.MONGO_URI)
+  });
+});
+
 // ✅ Local dev server (Vercel will use api/index.js instead)
 if (!process.env.VERCEL) {
   app.listen(3000, () => {

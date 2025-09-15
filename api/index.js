@@ -1,5 +1,6 @@
 const app = require('../app');
 
-module.exports = app;
+// Export a handler function compatible with @vercel/node
+module.exports = (req, res) => app(req, res);
 
 
