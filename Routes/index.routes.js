@@ -32,7 +32,12 @@ router.get("/", (req, res) => {
 });
 
 router.get("/home", authenticateToken, (req, res) => {
-    res.render("home", { files: uploadedFiles, user: req.user });
+    try {
+        return res.render("home", { files: uploadedFiles || [], user: req.user || null });
+    } catch (err) {
+        console.error('Error rendering /home:', err);
+        return res.status(500).send('Home render error: ' + err.message);
+    }
 });
 
 // Upload file route
