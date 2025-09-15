@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 
 const authenticateToken = (req, res, next) => {
   const token = req.cookies.token;
+  // Debug header to confirm middleware runs
+  res.setHeader('X-Auth-Middleware', token ? 'token-present' : 'no-token');
 
   if (!token) {
     return res.redirect('/login');

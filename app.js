@@ -43,6 +43,13 @@ app.use(cookieParser());
 app.use("/", userRouter);
 app.use("/", indexRouter);
 
+// Global error handler to surface real error text
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).send('App error: ' + (err && err.message ? err.message : 'Unknown error'));
+});
+
 // ✅ Health for diagnostics
 app.get('/health', (req, res) => {
   res.json({
