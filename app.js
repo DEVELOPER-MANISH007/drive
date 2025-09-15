@@ -42,6 +42,11 @@ app.use((req, res, next) => {
 app.use("/", userRouter);
 app.use("/", indexRouter);
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+// Start server only in local/dev. On Vercel, the app is exported via api/index.js
+if (!process.env.VERCEL) {
+  app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+  });
+}
+
+module.exports = app;
